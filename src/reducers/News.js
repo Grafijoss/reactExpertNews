@@ -9,10 +9,12 @@ const ADD_NEWS = 'news/add'
  */
 
 // action creator
-const addNews = payload => ({
+export const addNews = payload => ({
 	type: ADD_NEWS,
-	payload,
-	id: Math.random().toString(36)
+	payload: {
+		...payload,
+		id: Math.random().toString(36)
+	}
 	// the best ways to generate ids are with date algoritms
 })
 

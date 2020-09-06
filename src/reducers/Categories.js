@@ -1,5 +1,6 @@
 // Ttypes
-const ADD_CATEGORY = 'categorys/add'
+const ADD_CATEGORY = 'categories/add'
+const SELECT_CATEGORY = 'categories/select'
 
 /** 
  * CATEGORY MODEL
@@ -8,11 +9,18 @@ const ADD_CATEGORY = 'categorys/add'
  */
 
 // action creator
-const addCategory = payload => ({
+export const addCategory = payload => ({
 	type: ADD_CATEGORY,
-	payload,
-	id: Math.random().toString(36)
+	payload: {
+		...payload,
+		id: Math.random().toString(36)
+	}
 	// the best ways to generate ids are with date algoritms
+})
+
+export const selectCategory = payload => ({
+	type: SELECT_CATEGORY,
+	payload
 })
 
 const initialState = {
@@ -20,10 +28,14 @@ const initialState = {
 		id: 1,
 		name: 'Default'
 		// the best ways to generate identifiers are with date algorithms, different hashes, or the auto-increment of relational databases like msql
-	}]
+	}],
+	selected: 1
 }
 
+// REDUCER
 export default function reducer(state = initialState, action) {
+	console.log('dispatch reducer')
+	console.log(action)
 	switch (action.type) {
 		case ADD_CATEGORY:
 			// we will return a copy fo the current state
@@ -33,6 +45,11 @@ export default function reducer(state = initialState, action) {
 				// data: state.data.concat(action.payload)
 				data: [...state.data, action.payload]
 				// destroctering
+			}
+		case SELECT_CATEGORY:
+			return {
+				...state,
+				selected: action.payload
 			}
 		default:
 			return state
